@@ -16,11 +16,15 @@ builder.Services.AddOpenApi();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-}
+
 app.MapOpenApi();
-app.MapScalarApiReference();
+app.MapScalarApiReference(options =>
+{
+    options.Title = "Mi API de Producción";
+    // Opcional: configurar temas u otras opciones
+});
+
+app.MapGet("/", () => Results.Redirect("/scalar/v1"));
 
 app.UseHttpsRedirection();
 
